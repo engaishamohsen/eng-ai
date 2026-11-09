@@ -20,11 +20,11 @@ for (let p = 1; p <= 150; p++) {
   const rows = parsePage(await get(BASE + "files.php?page=" + p));
   const fresh = rows.filter(r => !map.has(r[0]));
   fresh.forEach(r => map.set(r[0], r));
-  console.log(صفحة ${p}: ${rows.length} ملف (جديد ${fresh.length}));
+  console.log("صفحة " + p + ": " + rows.length + " ملف (جديد " + fresh.length + ")");
   if (!fresh.length) break;
   await sleep(300);
 }
 const files = [...map.values()].sort((a, b) => b[0] - a[0]);
-console.log(مجموع الملفات: ${files.length});
+console.log("مجموع الملفات: " + files.length);
 if (files.length < 100) { console.error("عدد الملفات قليل جداً، لن يُستبدل الفهرس القديم."); process.exit(1); }
 writeFileSync("public/catalog.json", JSON.stringify({ count: files.length, files }));
