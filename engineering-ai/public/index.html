@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171b57">
+<title>مساعد طالب الهندسة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--navy:#171b57;--navy2:#2a2f85;--gold:#f2b53d;--bg:#f4f5fb;--card:#fff;--text:#1a1c3a;--muted:#64678a;--line:#e1e3f2;--ok:#1f8a4c;--bad:#c0392b;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1030;--card:#171a4a;--text:#eceefb;--muted:#a3a7d4;--line:#2b2f6b;--navy:#0b0d33;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1030;--card:#171a4a;--text:#eceefb;--muted:#a3a7d4;--line:#2b2f6b;--navy:#0b0d33;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Cairo,Tahoma,"Segoe UI",sans-serif;line-height:1.7}
+header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:700;font-size:20px}
+header b{font-size:18px;display:block}header small{opacity:.8}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:32px 20px;text-align:center}
+.hero h1{margin:0 0 6px;font-size:28px}.hero p{margin:0 auto;max-width:640px;opacity:.9}
+.badge{display:inline-block;background:var(--gold);color:var(--navy);border-radius:20px;padding:2px 12px;font-size:13px;font-weight:700;margin-bottom:10px}
+main{max-width:920px;margin:0 auto;padding:18px 16px 40px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 16px;border-radius:12px;font:inherit;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--navy2);color:#fff;border-color:var(--navy2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.panel[hidden]{display:none}
+input,select{font:inherit;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+button.go{font:inherit;background:var(--navy2);color:#fff;border:0;border-radius:12px;padding:10px 20px;cursor:pointer;font-weight:600}
+button.go:disabled{opacity:.5}
+.row{display:flex;gap:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.chip{font:inherit;font-size:13px;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:4px 12px;border-radius:20px;cursor:pointer}
+#log{min-height:220px;max-height:55vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.msg{padding:10px 14px;border-radius:14px;max-width:88%;white-space:pre-wrap}
+.me{background:var(--navy2);color:#fff;align-self:flex-start}
+.ai{background:var(--bg);border:1px solid var(--line);align-self:flex-end}
+.ai a,.file a{color:var(--navy2);font-weight:600}
+@media (prefers-color-scheme:dark){.ai a,.file a{color:var(--gold)}}
+.file{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.tag{font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:1px 8px;color:var(--muted)}
+.q h4{margin:0 0 8px}.opt{display:block;width:100%;text-align:start;font:inherit;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:rgba(31,138,76,.15)}.opt.bad{border-color:var(--bad);background:rgba(192,57,43,.15)}
+.exp{color:var(--muted);font-size:14px;margin-top:6px}
+.note{font-size:13px;color:var(--muted)}
+footer{background:var(--navy);color:#fff;text-align:center;padding:18px;font-size:14px}
+footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<header><div class="logo">⚙</div><div><b>بوابة طالب الهندسة</b><small>كلية الهندسة – جامعة مصراتة</small></div></header>
+<section class="hero">
+<span class="badge">نسخة تجريبية</span>
+<h1>مساعد طالب الهندسة</h1>
+<p>اسأل عن الشيتات والامتحانات واللوائح، وأنشئ اختباراً سريعاً للمراجعة، بمساعدة الذكاء الاصطناعي.</p>
+</section>
+<main>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" aria-selected="true" data-p="chat">💬 اسأل المساعد</button>
+<button class="tab" role="tab" aria-selected="false" data-p="search">🔎 بحث في المكتبة</button>
+<button class="tab" role="tab" aria-selected="false" data-p="quiz">🧠 امتحان سريع</button>
+</div>
+
+<section class="panel" id="chat">
+<div class="card">
+<div id="log"><div class="msg ai">مرحباً! أنا مساعد طالب الهندسة. اسألني عن مقرر أو شيت أو امتحان، أو عن اللوائح مثل التقديرات والانسحاب والغياب.</div></div>
+<div class="chips" id="sugg"></div>
+<div class="row"><input id="q" placeholder="اكتب سؤالك هنا..." autocomplete="off"><button class="go" id="send">إرسال</button></div>
+<p class="note">يعتمد المساعد على ملفات بوابة الهندسة وصفحة مساحة الطالب. راجع اللوائح الرسمية للقرارات المهمة.</p>
+</div>
+</section>
+
+<section class="panel" id="search" hidden>
+<div class="card">
+<input id="s" placeholder="ابحث باسم المقرر أو الدكتور أو نوع الملف...">
+<div class="chips" id="types"></div>
+</div>
+<div id="results"></div>
+</section>
+
+<section class="panel" id="quiz" hidden>
+<div class="card">
+<p>اكتب اسم المقرر وسيُنشئ المساعد اختباراً من 4 أسئلة للمراجعة السريعة.</p>
+<div class="row"><input id="course" placeholder="مثال: رياضة 3" list="courses"><button class="go" id="mk">أنشئ الاختبار</button></div>
+<datalist id="courses"></datalist>
+<p class="note">هذا العرض يولّد الأسئلة من معرفة النموذج. في النسخة الكاملة تُبنى الأسئلة من بنك الامتحانات السابقة المنشورة في البوابة.</p>
+</div>
+<div id="quizout"></div>
+</section>
+</main>
+<footer>تنفيذ: <b>م. عائشة محسن</b> · بإشراف اتحاد طلبة كلية الهندسة – جامعة مصراتة</footer>
+
+<script>
+var BASE="https://unigov.misuratau.edu.ly/su/view_file.php?id=";
+var FILES=[
+[714,"امتحان الجزئي الثاني – فيزياء 2","فيزياء 2 (ع ع 112)","العام","أسئلة سابقة","غير محدد"],
+[713,"الشيت الأول","تحليل اجهادات (هـ مك 205)","الهندسة الميكانيكية","الشيتات والملخصات","أ. د. محمد التائب"],
+[712,"مخطط سايكومتري","أساسيات التكييف والتبريد (هـ مك 322)","الهندسة الميكانيكية","الشيتات والملخصات","أ. عبدالمجيد القراب"],
+[711,"نهائي أساسيات التكييف والتبريد – ربيع 2026","أساسيات التكييف والتبريد (هـ مك 322)","الهندسة الميكانيكية","أسئلة سابقة","أ. عبدالمجيد القراب"],
+[710,"جزئي أول رياضة 3 – ربيع 2026","رياضة 3 (ع ع 203)","العام","أسئلة سابقة","أ. فاطمة الصور"],
+[709,"نهائي آلات كهربائية – ربيع 2026","آلات كهربائية (هـ مك 381)","الهندسة الميكانيكية","أسئلة سابقة","أ. د. الصديق الزواوي"],
+[708,"شيتات مقرر رياضة 3","رياضة 3 (ع ع 203)","العام","الشيتات والملخصات","أ. فاطمة الصور"],
+[707,"مذكرة طالب","ميكانيكا هندسية 1 (هـ ع 121)","العام","الشيتات والملخصات","غير محدد"],
+[706,"المشروع الأول – معمل تطبيقات الحاسوب والتصميم","معمل تطبيقات الحاسوب والتصميم (هـ كه 573م)","الهندسة الكهربائية والإلكترونية","الشيتات والملخصات","غير محدد"],
+[600,"إجابة نهائي رياضة 2 – ربيع 2025-2026","رياضة 2","العام","أسئلة سابقة","غير محدد"],
+[79,"شيت الثقافة الإسلامية","الثقافة الإسلامية","العام","الشيتات والملخصات","أ. خالد أبودبوس"],
+[425,"امتحانات متنوعة – فيزياء 2","فيزياء 2 (ع ع 112)","العام","أسئلة سابقة","غير محدد"],
+[285,"امتحانات لغة إنجليزية 2 – خريف 25-26","لغة إنجليزية 2","العام","أسئلة سابقة","غير محدد"]
+];
+var FAQ="الفصول الدراسية: غالباً 10 فصول. الأقسام: 11 قسماً. اختيار التخصص: في الفصل الثاني للطالب في الكلية (الثالث مع التمهيدي). تجديد القيد: في بداية كل فصل بسداد الرسوم للخزينة وتسليم الإيصال لقسم التسجيل. درجة النجاح 50%. التقديرات: ممتاز 85-100، جيد جداً 75 إلى أقل من 85، جيد 65 إلى أقل من 75، مقبول أقل من 65 حتى النجاح. التظلم: للراسب في المقرر فقط وبحد أقصى مقررين، بلجنة من ثلاثة أعضاء بحضور الطالب. إذا بقي المعدل التراكمي أقل من 50% لثلاثة فصول متتالية يتعرض الطالب للفصل الأكاديمي. الوحدات: الحد الأدنى 14 وحدة، والأعلى 18 لمعدل أقل من 65، 19 لمعدل 65-70، 20 لمعدل 70-75، 21 لجيد جداً فأعلى (ولا يتجاوز 21 إلا للخريج بموافقة المجالس). الحذف: إلغاء المادة في بداية الفصل ولا تظهر في الكشف. الانسحاب: بعد الأسبوع الثالث وقبل الأسبوع الأخير، يظهر بالرمز (م) دون أثر على المعدل، بشرط ألا ينقص مجموع الوحدات عن 14، وألا يكون الطالب قد رسب في المقرر أو انسحب منه سابقاً، وموافقة القسم والتسجيل، ويجب إعادة تسجيل المقرر في أول فصل متاح. الغياب عن الجزئي بدون عذر: صفر. بعذر مقبول: لا امتحان تعويضي وتحتسب الدرجة نسبة من درجة النهائي، ويقدم العذر خلال 3 أيام من الامتحان بنموذج الأعذار. إيقاف القيد: خلال شهر من بداية الفصل، كتابياً بموافقة رئيس القسم والمسجل، مرة واحدة طوال الدراسة وبحد أقصى فصلين، ولا تحتسب المدة ضمن مدة التخرج. اللوائح المتاحة في البوابة: اللائحة 501، اللائحة الداخلية للكلية، لائحة مشاريع التخرج.";
+var SYS="أنت مساعد طالب الهندسة في كلية الهندسة بجامعة مصراتة. الطلاب يكتبون غالباً باللهجة الليبية أو بالعامية أو بأخطاء إملائية، فافهم قصدهم دائماً. أمثلة: نبي/نبغى/نبّي = أريد، وين نلقى = أين أجد، شيت/شيتات = شيتات ومسائل تدريبية، فاينل = الامتحان النهائي، ميد/ميدترم = الامتحان الجزئي، كيفاش/شن = كيف/ماذا، واجد/برشا = كثير، تو = الآن، علاش = لماذا، نسحب = أنسحب من مقرر، نحذف = أحذف مقرر، سمستر = فصل دراسي، المعدل = المعدل التراكمي. أجب دائماً بالعربية الفصحى السهلة وبإيجاز وبأسلوب ودود، ولا تستخدم كلمات عامية أو ليبية في ردودك مهما كانت لهجة الطالب. اعتمد فقط على المعلومات التالية. إن لم تجد الإجابة فيها فقل ذلك بوضوح وانصح بمراجعة قسم التسجيل أو اللوائح الرسمية، ولا تخترع معلومات.\n\nالأسئلة الشائعة واللوائح:\n"+FAQ+"\n\nملفات المكتبة (المعرّف|العنوان|المقرر|القسم|النوع|الدكتور):\n"+FILES.map(function(f){return f.join("|")}).join("\n")+"\n\nعند الإشارة إلى ملف اكتب معرّفه بهذا الشكل [#714] ليتحول إلى رابط. لا تذكر معرّفات غير موجودة في القائمة.";
+
+async function callAI(prompt,wantJson,onText){
+var s=null;try{s=window.claude?await claude.use("sample"):null}catch(e){}
+if(s){
+if(wantJson)return await s.json(prompt,{modelTier:"default",cache:false});
+var r=await s(prompt,{cache:false,modelTier:"quick",onText:onText?function(x){onText(x.text)}:undefined});return r.text}
+var res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:prompt})});
+var d=null;try{d=await res.json()}catch(x){}
+if(!res.ok||!d||typeof d.text!=="string")throw{code:res.status===429?"rate_limited":"err",detail:(d&&d.error)||("HTTP "+res.status)};
+if(wantJson){var m=d.text.match(/\[[\s\S]*\]/);return JSON.parse(m?m[0]:d.text)}
+return d.text}
+async function chatAI(convo,onText){
+var s=null;try{s=window.claude?await claude.use("sample"):null}catch(e){}
+if(s)return await callAI(convo,false,onText);
+var res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({history:hist.slice(-8)})});
+var d=null;try{d=await res.json()}catch(x){}
+if(!res.ok||!d||typeof d.text!=="string")throw{code:res.status===429?"rate_limited":"err",detail:(d&&d.error)||("HTTP "+res.status)};
+return d.text}
+function nz(s){return s.replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/ـ/g,"")}
+var STOP="نبي نبغى نبغي نبّي ابي ابغى اريد وين نلقى نلقي لقى عندك عندكم شيت شيتات ملخص ملخصات مذكره ممكن لو سمحت من في على ملف ملفات اعطني هات هاتلي شي شن ابحث عن لي لنا".split(" ").map(nz);
+var SYN={"فاينل":"نهائي","ميد":"جزئي","ميدترم":"جزئي","ماث":"رياضه","فيزيا":"فيزياء","انجليزي":"انجليزيه","امتحان":"","امتحانات":""};
+function toks(k){return nz(k).split(/\s+/).filter(function(w){return w.length>1&&STOP.indexOf(w)<0}).map(function(w){return w in SYN?SYN[w]:w}).filter(Boolean)}
+function esc(t){return t.replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+function fmt(t){return esc(t).replace(/\[#(\d+)\]/g,function(m,id){return '<a href="'+BASE+id+'" target="_blank" rel="noopener">ملف '+id+'</a>'})}
+
+document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){
+document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});
+document.querySelectorAll(".panel").forEach(function(p){p.hidden=p.id!==b.dataset.p})}});
+
+var log=document.getElementById("log"),qi=document.getElementById("q"),sendB=document.getElementById("send"),hist=[];
+["كيف تُحسب التقديرات؟","ما شروط الانسحاب من مقرر؟","أريد شيتات رياضة 3","أين أجد نهائي التكييف والتبريد؟"].forEach(function(t){
+var c=document.createElement("button");c.className="chip";c.textContent=t;c.onclick=function(){qi.value=t;ask()};document.getElementById("sugg").appendChild(c)});
+function add(cls,html){var d=document.createElement("div");d.className="msg "+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+async function ask(){
+var t=qi.value.trim();if(!t)return;qi.value="";add("me",esc(t));
+var out=add("ai","…");sendB.disabled=true;
+try{
+hist.push({role:"user",content:t});
+var convo=SYS+"\n\nالمحادثة حتى الآن:\n"+hist.map(function(m){return(m.role==="user"?"الطالب: ":"المساعد: ")+m.content}).join("\n")+"\n\nأجب عن آخر سؤال للطالب.";
+var r=await chatAI(convo,function(x){out.innerHTML=fmt(x);log.scrollTop=log.scrollHeight});
+out.innerHTML=fmt(r);hist.push({role:"assistant",content:r});
+}catch(e){out.textContent=e&&e.code==="rate_limited"?"عدد كبير من الطلبات، حاول بعد قليل.":"تعذّر الحصول على إجابة الآن."+(e&&e.detail?" ("+e.detail+")":"")}
+finally{sendB.disabled=false}}
+sendB.onclick=ask;qi.onkeydown=function(e){if(e.key==="Enter")ask()};
+
+var type="";
+var types=["الكل","أسئلة سابقة","الشيتات والملخصات","المفردات","الشروحات","مراجع إضافية"];
+types.forEach(function(t){var c=document.createElement("button");c.className="chip";c.textContent=t;c.onclick=function(){type=t==="الكل"?"":t;render()};document.getElementById("types").appendChild(c)});
+function render(){
+var k=document.getElementById("s").value.trim(),box=document.getElementById("results");box.innerHTML="";
+var tk=toks(k);var list=FILES.filter(function(f){var h=nz(f.join(" "));return(!type||f[4]===type)&&tk.every(function(w){return h.indexOf(w)>-1})});
+if(!list.length){box.innerHTML='<div class="card note">لا توجد نتائج في العيّنة التجريبية.</div>';return}
+var total=list.length;list.slice(0,40).forEach(function(f){var d=document.createElement("div");d.className="card file";
+d.innerHTML='<div><a href="'+BASE+f[0]+'" target="_blank" rel="noopener">'+esc(f[1])+'</a><div class="note">'+esc(f[2])+" · "+esc(f[5])+'</div></div><div><span class="tag">'+esc(f[4])+'</span> <span class="tag">'+esc(f[3])+'</span></div>';box.appendChild(d)});if(total>40){var n=document.createElement("div");n.className="note";n.textContent="يعرض أول 40 نتيجة من "+total+". دقّق البحث لتضييق النتائج.";box.appendChild(n)}}
+document.getElementById("s").oninput=render;render();
+if(!window.claude){fetch("/catalog.json").then(function(r){return r.json()}).then(function(c){if(c&&c.files&&c.files.length){FILES=c.files;fillCourses();render()}}).catch(function(){})}
+var dl=document.getElementById("courses");
+function fillCourses(){dl.innerHTML="";FILES.map(function(f){return f[2].replace(/\s*\(.*\)/,"")}).filter(function(v,i,a){return a.indexOf(v)===i}).forEach(function(c){var o=document.createElement("option");o.value=c;dl.appendChild(o)})}fillCourses();
+
+var mk=document.getElementById("mk");
+mk.onclick=async function(){
+var c=document.getElementById("course").value.trim(),out=document.getElementById("quizout");if(!c)return;
+out.innerHTML='<div class="card note">جارٍ إنشاء الاختبار…</div>';mk.disabled=true;
+try{
+var qs=await callAI('أنشئ 4 أسئلة اختيار من متعدد بالعربية لمراجعة مقرر هندسي جامعي اسمه "'+c+'" بمستوى سنة أولى أو ثانية هندسة. أعد JSON فقط: مصفوفة عناصرها {"q":"السؤال","options":["أ","ب","ج","د"],"answer":رقم الخيار الصحيح من 0 إلى 3,"explain":"شرح قصير"}.',true);
+out.innerHTML="";var score=0,done=0;
+var sc=document.createElement("div");sc.className="card";sc.textContent="النتيجة: 0 / "+qs.length;
+qs.forEach(function(it,i){var d=document.createElement("div");d.className="card q";var h=document.createElement("h4");h.textContent=(i+1)+". "+it.q;d.appendChild(h);
+var ex=document.createElement("div");ex.className="exp";ex.hidden=true;ex.textContent=it.explain||"";
+it.options.forEach(function(o,j){var b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=function(){
+if(d.dataset.done)return;d.dataset.done=1;done++;
+if(j===it.answer){b.classList.add("ok");score++}else{b.classList.add("bad");d.querySelectorAll(".opt")[it.answer].classList.add("ok")}
+ex.hidden=false;sc.textContent="النتيجة: "+score+" / "+qs.length+(done===qs.length?" — أحسنت المراجعة!":"")};d.appendChild(b)});
+d.appendChild(ex);out.appendChild(d)});out.appendChild(sc);
+}catch(e){out.innerHTML='<div class="card note">تعذّر إنشاء الاختبار، حاول مرة أخرى.</div>'}
+finally{mk.disabled=false}};
+</script>
+</body>
+</html>
