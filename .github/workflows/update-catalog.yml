@@ -14,8 +14,9 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/build-catalog.mjs
+        working-directory: engineering-ai
       - run: |
           git config user.name "catalog-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add public/catalog.json
+          git add engineering-ai/public/catalog.json
           git diff --cached --quiet || (git commit -m "تحديث فهرس الملفات" && git push)
